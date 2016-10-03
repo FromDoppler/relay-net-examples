@@ -1,0 +1,27 @@
+{
+  "server": {
+    "host": "smtp.dopplerrelay.com",
+    "port": 587,
+    "username": "test@test.com",
+    "apikey": "abcde1234567890"
+  },
+  "common": {
+    "fromEmail": "no-reply@test.com",
+    "fromName": "Test Name",
+    "subject": "Test Subject",
+    "htmlFile": "html-content.html",
+    "textFile": "text-content.txt"
+  },
+  "items": [
+    {
+      "toName": "Andres Test",
+      "toEmail": "andres@test.com",
+      "attachments": [ "attachments/pruebaandres.pdf" ]
+    },
+    {
+      "toName": "Fede Test",
+      "toEmail": "fede@test.com",
+      "attachments": [ "attachments/pruebafede.pdf" ]
+    }
+  ]
+}
