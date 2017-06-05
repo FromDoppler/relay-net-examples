@@ -39,7 +39,7 @@ namespace SmptClient
                     builder.HtmlBody = item.htmlFile != null ? File.ReadAllText(item.htmlFile) : commonHtml;
                     builder.TextBody = item.textFile != null ? File.ReadAllText(item.textFile) : commonText;
 
-                    foreach (var attachmentFile in data.common.attachmentFiles.Union(item.attachmentFiles))
+                    foreach (var attachmentFile in data.common.attachments.Union(item.attachments))
                     {
                         builder.Attachments.Add(attachmentFile);
                     }
