@@ -1,0 +1,27 @@
+{
+  "server": {
+    "sendMessageUrlTemplate": "https://api.dopplerrelay.com/accounts/{accountId}/messages",
+    "apikey": "abcde1234567890",
+    "accountId": 5,
+    "accountName": "andres"
+  },
+  "common": {
+    "fromEmail": "no-reply@test.com",
+    "fromName": "Test Name",
+    "subject": "Test Subject",
+    "htmlFile": "html-content.html",
+    "textFile": "text-content.txt"
+  },
+  "items": [
+    {
+      "toName": "Andres Test",
+      "toEmail": "andres@test.com",
+      "attachments": [ "pruebaandres.pdf" ]
+    },
+    {
+      "toName": "Fede Test",
+      "toEmail": "fede@test.com",
+      "attachments": [ "pruebafede.pdf" ]
+    }
+  ]
+}
