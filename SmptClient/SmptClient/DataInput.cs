@@ -30,6 +30,6 @@ namespace SmptClient
         public string textFile { get; set; }
         public string toEmail { get; set; }
         public string toName { get; set; }
-        public string[] attachmentFiles { get; set; } = new string[0];
+        public string[] attachments { get; set; } = new string[0];
     }
 }

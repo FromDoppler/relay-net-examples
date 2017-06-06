@@ -3,6 +3,7 @@ using MimeKit;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -39,7 +40,7 @@ namespace SmptClient
                     builder.HtmlBody = item.htmlFile != null ? File.ReadAllText(item.htmlFile) : commonHtml;
                     builder.TextBody = item.textFile != null ? File.ReadAllText(item.textFile) : commonText;
 
-                    foreach (var attachmentFile in data.common.attachmentFiles.Union(item.attachmentFiles))
+                    foreach (var attachmentFile in data.common.attachments.Union(item.attachments))
                     {
                         builder.Attachments.Add(attachmentFile);
                     }
@@ -60,15 +61,20 @@ namespace SmptClient
 
                     Console.WriteLine("Sending...");
 
+                    var stopwatch = Stopwatch.StartNew();
+
                     using (var client = new SmtpClient())
                     {
                         client.Connect(data.server.host, data.server.port, false);
+                        Console.WriteLine($"    Connected {stopwatch.ElapsedMilliseconds} ms");
                         client.Authenticate(data.server.username, data.server.apikey);
+                        Console.WriteLine($"    Authenticated {stopwatch.ElapsedMilliseconds} ms");
                         client.Send(message);
+                        Console.WriteLine($"    Sent {stopwatch.ElapsedMilliseconds} ms");
                         client.Disconnect(true);
                     }
 
-                    Console.WriteLine("Sent!");
+                    Console.WriteLine($"Sent! in {stopwatch.ElapsedMilliseconds} ms");
                 }
                 catch (Exception e)
                 {
