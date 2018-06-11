@@ -93,6 +93,12 @@ namespace ApiClient
 
                     Console.WriteLine($"Sent! in {stopwatch.ElapsedMilliseconds} ms");
                 }
+                catch (FlurlHttpException e)
+                {
+                    Console.WriteLine("HTTP ERROR");
+                    Console.WriteLine(e.GetResponseStringAsync());
+                    Console.WriteLine();
+                }
                 catch (Exception e)
                 {
                     Console.WriteLine("ERROR");
