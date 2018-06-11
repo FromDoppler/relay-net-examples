@@ -33,6 +33,14 @@ namespace ApiClient
             var commonHtml = data.common.htmlFile != null ? File.ReadAllText(data.common.htmlFile) : null;
             var commonText = data.common.textFile != null ? File.ReadAllText(data.common.textFile) : null;
 
+            var template = new UriTemplate(data.server.sendMessageUrlTemplate);
+            template.AddParameters(new
+            {
+                accountId = data.server.accountId,
+                accountName = data.server.accountName
+            });
+            var client = new FlurlClient(template.Resolve()).WithOAuthBearerToken(data.server.apikey);
+
             foreach (var item in data.items)
             {
                 Console.WriteLine("Processing " + item.toEmail);
@@ -55,14 +63,8 @@ namespace ApiClient
 
                     Console.WriteLine("Preparing data and client...");
 
-                    var template = new UriTemplate(data.server.sendMessageUrlTemplate);
-                    template.AddParameters(new
-                    {
-                        accountId = data.server.accountId,
-                        accountName = data.server.accountName
-                    });
 
-                    var client = new FlurlClient(template.Resolve()).WithOAuthBearerToken(data.server.apikey);
+                    var request = client.Request();
 
                     var requestBody = new
                     {
@@ -87,9 +89,15 @@ namespace ApiClient
 
                     var stopwatch = Stopwatch.StartNew();
 
-                    await client.PostJsonAsync(requestBody);
+                    await request.PostJsonAsync(requestBody);
 
                     Console.WriteLine($"Sent! in {stopwatch.ElapsedMilliseconds} ms");
+                }
+                catch (FlurlHttpException e)
+                {
+                    Console.WriteLine("HTTP ERROR");
+                    Console.WriteLine(e.GetResponseStringAsync());
+                    Console.WriteLine();
                 }
                 catch (Exception e)
                 {
